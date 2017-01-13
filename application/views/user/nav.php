@@ -207,7 +207,7 @@
                 <i class="fa fa-user fa-fw"></i> <?php echo $user->name; ?> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> Minha Conta</a>
+                <li><a href="<?php echo base_url('perfil'); ?>"><i class="fa fa-user fa-fw"></i> Minha Conta</a>
                 </li>
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configurações</a>
                 </li>

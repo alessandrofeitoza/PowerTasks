@@ -77,6 +77,23 @@ class User extends CI_Controller{
 
     $this->load->model('UserModel');
 
+    $extension = explode(".", $_FILES['photo']['name']);
+    $filename = $user->id_user.".".end($extension);
+
+    $config['upload_path']          = './assets/img/users/';
+    $config['allowed_types']        = 'gif|jpg|png';
+    $config['max_size']             = 100;
+    $config['max_width']            = 1024;
+    $config['max_height']           = 768;
+    $config['file_name'] = $filename;
+
+    $this->load->library('upload', $config);
+
+    if (!$this->upload->do_upload('photo')){
+      $this->session->set_flashdata('error', 'Problemas com o upload da imagem, tente outra.');
+      redirect('/perfil');
+    }
+
     $newEmail = filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL);
     if($newEmail != $user->email && $this->UserModel->searchByEmail($newEmail)){
       $this->session->set_flashdata('error', 'Já existe conta com este email');
@@ -84,6 +101,7 @@ class User extends CI_Controller{
     }
 
     $user->name = html_escape($this->input->post('name'));
+    $user->photo = $filename;
     $user->email = $newEmail;
     if($this->input->post('password') != ""){
       $user->password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
@@ -101,4 +119,5 @@ class User extends CI_Controller{
     $this->session->set_flashdata('success', "Você saiu");
     redirect("/");
   }
+
 }

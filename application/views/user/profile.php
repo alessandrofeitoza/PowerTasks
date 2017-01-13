@@ -1,19 +1,3 @@
-<style>
-.navbar-login
-{
-  width: 305px;
-  padding: 10px;
-  padding-bottom: 0px;
-}
-
-.navbar-login-session
-{
-  padding: 10px;
-  padding-bottom: 0px;
-  padding-top: 0px;
-}
-</style>
-
 <script>
 function file_photo(){
   $('#uploadImage').click();
@@ -69,6 +53,7 @@ function PreviewImage() {
 
             <div class="hidden">
             	<input type="file" name="photo" onchange="PreviewImage();" id="uploadImage">
+              <input name="teste" value="teste">
             </div>
           </div>
         </div>
