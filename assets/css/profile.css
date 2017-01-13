@@ -1,0 +1,39 @@
+/* Profile container */
+.profile {
+margin: 10px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+padding: 10px 0 00px 0;
+}
+
+.profile-userpic img {
+float: none;
+margin: 0 auto;
+width: 40%;
+height: 40%;
+-webkit-border-radius: 50% !important;
+-moz-border-radius: 50% !important;
+border-radius: 50% !important;
+}
+
+.profile-usertitle {
+text-align: center;
+margin-top: 20px;
+}
+
+.profile-usertitle-name {
+color: #5a7391;
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+text-transform: uppercase;
+color: #5b9bd1;
+font-size: 10px;
+font-weight: 600;
+margin-bottom: 15px;
+}
