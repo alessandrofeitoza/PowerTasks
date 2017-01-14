@@ -39,41 +39,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
-
-<body>
-
-    <div id="wrapper">
-
-        <?php $this->load->view('user/nav'); ?>
-
-        <div id="page-wrapper">
-            <!-- <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header"><?php echo $page_title; ?></h1>
-                </div>
-            </div> -->
-            <!-- /.row -->
-
-            <?php validate_message(); ?>
-
-            <?php $this->load->view($page_content); ?>
-
-            <div class="row">
-              <div class="col-lg-12">
-                <footer class="footer text-right">
-                  <hr>
-                  <p><strong>PowerTasks</strong> | <?php echo date('Y'); ?><br></p>
-                  Desenvolvido por <a target="_blank" href="http://www.alessandrofeitoza.eu/curriculo">Alessandro Feitoza</a>
-                </footer><br><br>
-              </div>
-            </div>
-
-        </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- /#wrapper -->
-
     <!-- jQuery -->
     <script src="<?php echo base_url('assets/sb-admin/vendor/jquery/jquery.min.js'); ?>"></script>
 
@@ -90,6 +55,47 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url('assets/sb-admin/dist/js/sb-admin-2.js'); ?>"></script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <?php $this->load->view('user/nav'); ?>
+
+        <div id="page-wrapper">
+            <br><br>
+            <?php validate_message(); ?>
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="container">
+                  <br>
+                  <div class="card">
+                    <h1 class="title"><?php echo $page_title; ?></h1>
+
+                    <?php $this->load->view($page_content); ?>
+                  </div><!-- card -->
+                </div><!-- container -->
+              </div><!-- col-lg-12 -->
+            </div><!-- row -->
+            <div class="row">
+              <div class="col-lg-12">
+                <footer class="footer text-right">
+                  <hr>
+                  <p><strong>PowerTasks</strong> | <?php echo date('Y'); ?><br></p>
+                  Desenvolvido por <a target="_blank" href="http://www.alessandrofeitoza.eu/curriculo">Alessandro Feitoza</a>
+                </footer><br><br>
+              </div>
+            </div>
+
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+
 
 
 </body>

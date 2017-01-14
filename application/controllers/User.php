@@ -4,10 +4,18 @@ defined('BASEPATH') or die("Sem Permissão");
 class User extends CI_Controller{
   public function index(){
     if(!$this->session->userdata('user-powertasks')){
-      $this->login();
-    }else{
-      redirect("/tarefas");
+      redirect('entrar');
     }
+
+    $user = $this->session->userdata('user-powertasks');
+
+    $page = [
+      'page_title' => 'Dashboard',
+      'page_content' => 'user/dashboard',
+      'user'=>$user,
+    ];
+
+    $this->load->view('public/base', $page);
   }
 
   public function login(){
@@ -30,18 +38,18 @@ class User extends CI_Controller{
     if(!$user){
       $this->session->set_flashdata('error', 'Usuário não encontrado');
       $this->session->set_flashdata('email', $email);
-      redirect("/");
+      redirect("entrar");
     }
 
     if(!password_verify($password, $user->password)){
       $this->session->set_flashdata('error', 'Senha Incorreta');
       $this->session->set_flashdata('email', $email);
-      redirect("/");
+      redirect("entrar");
     }
 
     $this->session->set_userdata('user-powertasks', $user);
     $this->session->set_flashdata('success', "Bem vindo $user->name");
-    redirect("/tarefas");
+    redirect('/');
   }
 
   public function insert(){
@@ -57,7 +65,7 @@ class User extends CI_Controller{
     $this->UserModel->insert($newUser);
     $this->authenticate($newUser->email, $this->input->post('password', true));
 
-    redirect("/");
+    redirect('/');
   }
 
   public function profile(){
@@ -89,25 +97,11 @@ class User extends CI_Controller{
       $user->password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
     }
 
-    if($_FILES['photo']['tmp_name'] != ""){
-      $extension = explode(".", $_FILES['photo']['name']);
-      $filename = $user->id_user.".".end($extension);
+    if($_FILES['photo']['name'] != ""){
+      $filename = upload_photo($user->id_user, 'photo', './assets/img/users/');
 
-      if(file_exists('./assets/img/users/'.$userphoto)){
-        unlink('./assets/img/users/'.$user->photo);
-      }
-
-      $config['upload_path']          = './assets/img/users/';
-      $config['allowed_types']        = 'gif|jpg|png';
-      $config['max_size']             = 100;
-      $config['max_width']            = 1024;
-      $config['max_height']           = 1024;
-      $config['file_name'] = $filename;
-
-      $this->load->library('upload', $config);
-
-      if (!$this->upload->do_upload('photo')){
-        $this->session->set_flashdata('error', 'Problemas com o upload da imagem, tente outra.');
+      if(!$filename){
+        $this->session->set_flashdata('error', 'Por favor tente outra imagem');
         redirect('/perfil');
       }
 
@@ -125,7 +119,7 @@ class User extends CI_Controller{
     $this->session->unset_userdata('user-powertasks');
 
     $this->session->set_flashdata('success', "Você saiu");
-    redirect("/");
+    redirect('/');
   }
 
 }

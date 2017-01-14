@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	$route['default_controller'] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the 'welcome' class
 | would be loaded.
 |
 |	$route['404_override'] = 'errors/page_missing';
@@ -50,18 +50,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'user';
-$route['entrar'] = "user";
-$route['sair'] = "user/logout";
-$route['perfil'] = "user/profile";
-$route['autenticar'] = "user/authenticate";
-$route['usuario/inserir'] = "user/insert";
-$route['usuario/atualizar'] = "user/updateaccount";
-$route['tarefas'] = "task";
-$route['inserir'] = "task/insert";
-$route['editar/(:num)'] = "task/edit/$1";
-$route['atualizar/(:num)'] = "task/update/$1";
-$route['excluir/(:num)'] = "task/delete/$1";
-$route['concluir/(:num)'] = "task/complete/$1";
-$route['reabrir/(:num)'] = "task/reopen/$1";
+$route['entrar'] = 'user/login';
+$route['sair'] = 'user/logout';
+$route['perfil'] = 'user/profile';
+$route['autenticar'] = 'user/authenticate';
+$route['usuario/inserir'] = 'user/insert';
+$route['usuario/atualizar'] = 'user/updateaccount';
+
+$route['times'] = 'team';
+$route['time'] = 'team';
+$route['time/novo'] = 'team/add';
+$route['time/inserir'] = 'team/insert';
+$route['time/excluir/(:num)'] = 'team/delete/$1';
+$route['time/editar/(:num)'] = 'team/edit/$1';
+$route['time/atualizar/(:num)'] = 'team/update/$1';
+
+$route['tarefas'] = 'task';
+$route['inserir'] = 'task/insert';
+$route['editar/(:num)'] = 'task/edit/$1';
+$route['atualizar/(:num)'] = 'task/update/$1';
+$route['excluir/(:num)'] = 'task/delete/$1';
+$route['concluir/(:num)'] = 'task/complete/$1';
+$route['reabrir/(:num)'] = 'task/reopen/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -23,29 +23,17 @@
             <li>
                 <a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <!-- <li>
-                <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+            <li>
+                <a href="#"><i class="fa fa-group fa-fw"></i> Times<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="panels-wells.html">Panels and Wells</a>
+                        <a href="<?php echo base_url('times'); ?>">Meus Times</a>
                     </li>
                     <li>
-                        <a href="buttons.html">Buttons</a>
-                    </li>
-                    <li>
-                        <a href="notifications.html">Notifications</a>
-                    </li>
-                    <li>
-                        <a href="typography.html">Typography</a>
-                    </li>
-                    <li>
-                        <a href="icons.html"> Icons</a>
-                    </li>
-                    <li>
-                        <a href="grid.html">Grid</a>
+                        <a href="<?php echo base_url('time/novo'); ?>">Novo Time</a>
                     </li>
                 </ul>
-            </li> -->
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

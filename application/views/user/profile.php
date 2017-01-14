@@ -1,20 +1,4 @@
-<script>
-function file_photo(){
-  $('#uploadImage').click();
-}
-
-function PreviewImage() {
-      var oFReader = new FileReader();
-      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
-
-      oFReader.onload = function (oFREvent) {
-          document.getElementById("uploadPreview").src = oFREvent.target.result;
-      };
-  };
-
-</script>
-
-
+<script src="<?php echo base_url('assets/js/upload_photo.js') ?>"></script>
 
 <form action="<?php echo base_url('usuario/atualizar'); ?>" enctype="multipart/form-data" method="POST">
 <div class="row">
