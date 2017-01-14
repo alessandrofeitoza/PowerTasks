@@ -63,11 +63,11 @@ class User extends CI_Controller{
   public function profile(){
     $user = authorize(1);
 
-    $page = array(
+    $page = [
       'user' => $user,
       'page_content' => 'user/profile',
       'page_title' => 'Minha Conta',
-    );
+    ];
 
     $this->load->view('public/base', $page);
   }
@@ -77,23 +77,6 @@ class User extends CI_Controller{
 
     $this->load->model('UserModel');
 
-    $extension = explode(".", $_FILES['photo']['name']);
-    $filename = $user->id_user.".".end($extension);
-
-    $config['upload_path']          = './assets/img/users/';
-    $config['allowed_types']        = 'gif|jpg|png';
-    $config['max_size']             = 100;
-    $config['max_width']            = 1024;
-    $config['max_height']           = 768;
-    $config['file_name'] = $filename;
-
-    $this->load->library('upload', $config);
-
-    if (!$this->upload->do_upload('photo')){
-      $this->session->set_flashdata('error', 'Problemas com o upload da imagem, tente outra.');
-      redirect('/perfil');
-    }
-
     $newEmail = filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL);
     if($newEmail != $user->email && $this->UserModel->searchByEmail($newEmail)){
       $this->session->set_flashdata('error', 'Já existe conta com este email');
@@ -101,11 +84,36 @@ class User extends CI_Controller{
     }
 
     $user->name = html_escape($this->input->post('name'));
-    $user->photo = $filename;
     $user->email = $newEmail;
     if($this->input->post('password') != ""){
       $user->password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
     }
+
+    if($_FILES['photo']['tmp_name'] != ""){
+      $extension = explode(".", $_FILES['photo']['name']);
+      $filename = $user->id_user.".".end($extension);
+
+      if(file_exists('./assets/img/users/'.$userphoto)){
+        unlink('./assets/img/users/'.$user->photo);
+      }
+
+      $config['upload_path']          = './assets/img/users/';
+      $config['allowed_types']        = 'gif|jpg|png';
+      $config['max_size']             = 100;
+      $config['max_width']            = 1024;
+      $config['max_height']           = 1024;
+      $config['file_name'] = $filename;
+
+      $this->load->library('upload', $config);
+
+      if (!$this->upload->do_upload('photo')){
+        $this->session->set_flashdata('error', 'Problemas com o upload da imagem, tente outra.');
+        redirect('/perfil');
+      }
+
+      $user->photo = $filename;
+    }
+
 
     $this->UserModel->updateById($user, $user->id_user);
 
