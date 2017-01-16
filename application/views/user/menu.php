@@ -24,6 +24,9 @@
                 <a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
+                <a href="<?php echo base_url('tarefas'); ?>"><i class="fa fa-tasks fa-fw"></i> Minhas Tarefas</a>
+            </li>
+            <li>
                 <a href="#"><i class="fa fa-group fa-fw"></i> Times<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>

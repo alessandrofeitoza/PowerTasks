@@ -3,18 +3,22 @@ defined('BASEPATH') or die("Sem Permissão");
 
 class Task extends CI_Controller{
   public function index(){
-    $this->load->model('TaskModel');
+    $this->load->model(array('TaskModel', 'TagModel'));
 
     $user = authorize(1);
 
     //$tasks = $this->TaskModel->searchAll($user->email);
     $tasks = false;
 
+    $tags = $this->TagModel->searchByUser($user->id_user);
+
     $page = array(
       'page_content' => "task/list",
       'user' => $user,
       'tasks' => $tasks,
-      'page_title' => 'Dashboard',
+      'page_title' => 'Minhas Tarefas',
+      'tasks' => array(),
+      'tags' => $tags,
     );
 
     $this->load->view("public/base", $page);

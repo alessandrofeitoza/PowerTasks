@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'auth', 'messages', 'labeltask', 'datetime', 'security', 'date', 'upload');
+$autoload['helper'] = array('url', 'auth', 'messages', 'labeltask', 'datetime', 'security', 'date', 'upload', 'tag');
 
 /*
 | -------------------------------------------------------------------

@@ -1,0 +1,23 @@
+.label-green {
+  border-color: #5cb85c;
+  color: white;
+}
+.label-green > a {
+  color: #3d8b3d;
+}
+
+.label-red {
+  border-color: #d9534f;
+  color: white;
+}
+.label-red > a {
+  color: #b52b27;
+}
+
+.label-yellow {
+  border-color: #f0ad4e;
+  color: white;
+}
+.label-yellow > a {
+  color: #df8a13;
+}
