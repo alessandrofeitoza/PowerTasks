@@ -30,6 +30,10 @@
     $(".js-example-templating").select2({
       templateResult: formatState
     });
+
+    $('[data-target="#removeMember"]').on("click", function(){
+      $('#confirmRemoveMember').attr('href','<?php echo base_url("time/membro/remover/$team->id_team/");?>'+$(this).val());
+    });
   });
 </script>
 
@@ -96,7 +100,7 @@
               echo '<tr>';
               echo '<td><img width="30px" src="',base_url('assets/img/users/'.$member->photo),'" class="img-circle">&nbsp;&nbsp;', $member->name,'</td>';
               echo '<td>',$member->created_in,'</td>';
-              echo '<td><a href="" data-placement="top" class="btn btn-sm btn-danger" title="Remover do Time"><span class="fa fa-trash"></span></a></td>';
+              echo '<td><button value="',$member->id_user,'" data-target="#removeMember" data-toggle="modal" data-placement="top" class="btn btn-sm btn-danger" title="Remover do Time"><span class="fa fa-trash"></span></button></td>';
               echo '</tr>';
             }
           ?>
@@ -107,5 +111,32 @@
   <div class="tab-pane fade" id="settings">
     <br><br>
     <?php $this->load->view('team/edit'); ?>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="removeMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Remover Membro do Time</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning">
+          <strong>Você deseja remover esse membro?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="" id="confirmRemoveMember" class="btn btn-block btn-lg btn-danger">Sim</a>
+          </div>
+          <div class="col-lg-6">
+            <button type="button" class="btn btn-block btn-lg btn-default" data-dismiss="modal">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

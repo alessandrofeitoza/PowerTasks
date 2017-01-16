@@ -44,6 +44,14 @@ class TeamMember extends Team{
   }
 
   public function removeMember($team_id, $member_id){
+    $user = authorize(1);
+    $team = parent::iManageThisTeam($team_id, $user->id_user);
 
+    $this->load->model('TeamMemberModel');
+
+    $this->TeamMemberModel->removeMemberOfTeam($team_id, $member_id);
+
+    $this->session->set_flashdata('success', 'O usuário foi removido do time');
+    redirect('time/'.$team_id.'/#members');
   }
 }
