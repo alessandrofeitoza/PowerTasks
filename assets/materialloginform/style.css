@@ -164,18 +164,19 @@ body {
   position: relative;
   background: #ffffff;
   border-radius: 5px;
-  padding: 60px 0 40px 0;
+  padding: 60px 5px 40px 5px;
   box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   -webkit-transition: .3s ease;
   transition: .3s ease;
-  padding: 10px;
+  /*padding: 10px;*/
   /* Title */
   /* Inputs */
   /* Button */
   /* Footer */
   /* Alt Card */
 }
+
 .card:first-child {
   background: #fafafa;
   height: 10px;

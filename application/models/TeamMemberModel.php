@@ -42,8 +42,8 @@ class TeamMemberModel extends CI_Model{
   public function searchAvailableMembersForThisTeam($team_id, $id_user){
     $this->db->select('name, photo, id_user');
     $this->db->where('id_user!=', $id_user);
-    $this->db->where('member_id is null');
-    $this->db->join('tb_user', 'id_user = member_id', 'right');
+    $this->db->where("(member_id IS NULL || team_id!='$team_id')");
+    $this->db->join('tb_user', 'id_user = member_id', 'RIGHT OUTER');
     $this->db->from($this->table);
 
 
