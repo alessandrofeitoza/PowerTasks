@@ -99,7 +99,7 @@ class Team extends CI_Controller{
     $this->TeamModel->updateById($team, $id);
 
     $this->session->set_flashdata('success', 'Dados do Time Atualizados');
-    redirect('time');
+    redirect('time/'.$id.'#settings');
   }
 
   public function delete($id){
@@ -109,18 +109,25 @@ class Team extends CI_Controller{
 
     $this->TeamModel->deleteById($id);
 
+    $this->load->model('TeamMemberModel');
+
+    $this->TeamMemberModel->removeAllMembersOfTeam($id);
+
     $this->session->set_flashdata('success', 'Time Excluído');
 
     redirect('time');
   }
 
-  public function iManageThisTeam($id, $user_id){
-    $this->load->model('TeamModel');
+  public static function iManageThisTeam($id, $user_id){
 
-    $my_team = $this->TeamModel->iManageThisTeam($id, $user_id);
+    $ci = & get_instance();
+
+    $ci->load->model('TeamModel');
+
+    $my_team = $ci->TeamModel->iManageThisTeam($id, $user_id);
 
     if(!$my_team){
-      $this->session->set_flashdata('error', 'Escolha um time válido');
+      $ci->session->set_flashdata('error', 'Escolha um time válido');
       redirect('/');
     }
 

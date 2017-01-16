@@ -65,6 +65,11 @@ $route['time/excluir/(:num)'] = 'team/delete/$1';
 $route['time/editar/(:num)'] = 'team/edit/$1';
 $route['time/atualizar/(:num)'] = 'team/update/$1';
 
+$route['time/(:num)'] = 'teamMember/view/$1';
+$route['time/membro/adicionar/(:num)/(:num)'] = 'teamMember/addmember/$1/$2';
+$route['time/membro/adicionar'] = 'teamMember/addmember';
+$route['time/membro/remover'] = 'teamMember/removemember/$1';
+
 $route['tarefas'] = 'task';
 $route['inserir'] = 'task/insert';
 $route['editar/(:num)'] = 'task/edit/$1';

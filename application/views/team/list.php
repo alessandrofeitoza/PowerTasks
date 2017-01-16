@@ -18,13 +18,15 @@
 <script src="<?php echo base_url('assets/datatables/js/datatables.bootstrap.min.js'); ?>"></script>
 
 <div class="row">
-  <div class="col-lg-12" style="padding: 20px;">
+  <div class="col-lg-12">
     <div class="table-responsive">
 <table class="table table-hover table-striped" id="table_teams">
   <thead>
     <tr>
       <th>Nome</th>
+      <th>Logo</th>
       <th>Descrição</th>
+      <th>Criado em</th>
       <th>Opções</th>
     </tr>
   </thead>
@@ -33,8 +35,11 @@
       foreach($teams as $each_team){
         echo '<tr>';
           echo '<td>',$each_team->name,'</td>';
+          echo '<td><img src="',base_url('assets/img/teams/'.$each_team->logo),'" class="img-circle" width="25px"></td>';
           echo '<td>',$each_team->description,'</td>';
+          echo '<td>',$each_team->created_in,'</td>';
           echo '<td>';
+            echo '<a href="',base_url('time/'.$each_team->id_team),'" data-placement="top" title="Gerenciar Membros" class="btn btn-info btn-sm"><span class="fa fa-group"></span></a> ';
             echo '<a href="',base_url('time/editar/'.$each_team->id_team),'" data-placement="top" title="Editar" class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></a> ';
             echo '<button data-target="#deleteTeam" value="',$each_team->id_team,'" data-toggle="modal" data-placement="top" title="Excluir" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>';
           echo '</td>';
