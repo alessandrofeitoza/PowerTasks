@@ -70,6 +70,11 @@ $route['time/membro/adicionar/(:num)/(:num)'] = 'teamMember/addmember/$1/$2';
 $route['time/membro/adicionar'] = 'teamMember/addmember';
 $route['time/membro/remover/(:num)/(:num)'] = 'teamMember/removemember/$1/$2';
 
+$route['time/etiqueta/inserir/(:num)'] = 'teamTag/insert/$1';
+$route['time/etiqueta/editar/(:num)/(:num)'] = 'teamTag/edit/$1/$2';
+$route['time/etiqueta/atualizar/(:num)/(:num)'] = 'teamTag/update/$1/$2';
+$route['time/etiqueta/excluir/(:num)/(:num)'] = 'teamTag/delete/$1/$2';
+
 $route['etiqueta/inserir'] = 'tag/insert';
 $route['etiqueta/editar/(:num)'] = 'tag/edit/$1';
 $route['etiqueta/excluir/(:num)'] = 'tag/delete/$1';

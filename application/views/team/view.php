@@ -7,7 +7,7 @@
 
 <script>
   $(document).ready(function(){
-    $('select').select2();
+    // $('select').select2();
 
     $('[data-placement="top"]').tooltip();
 
@@ -45,20 +45,39 @@
 
 <br><br>
 <ul class="nav nav-tabs">
-   <li class="active"><a href="#tasks" data-toggle="tab">Tarefas</a>
-   </li>
-   <li><a href="#members" data-toggle="tab">Membros</a>
-   </li>
-   <li><a href="#settings" data-toggle="tab">Configurações</a>
-   </li>
+  <li><a href="#tags" data-toggle="tab"><span class="fa fa-tags"></span> Etiquetas</a>
+  </li>
+  <li class="active"><a href="#tasksToDo" data-toggle="tab"><span class="fa fa-exclamation-circle"></span> Tarefas Para Fazer</a>
+  </li>
+  <li><a href="#tasksDone" data-toggle="tab"><span class="fa fa-check-circle"></span> Tarefas Concluídas</a>
+  </li>
+  <li><a href="#members" data-toggle="tab"><span class="fa fa-group"></span> Membros</a>
+  </li>
+  <li><a href="#settings" data-toggle="tab"><span class="fa fa-cog"></span> Configurações</a>
+  </li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-  <div class="tab-pane" id="">
+  <div class="tab-pane" id="tags">
     <br>
+    <a href="#addTag" class="btn btn-link" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+      <span class="fa fa-plus-circle"></span> Nova Etiqueta
+    </a>
+    <br><br>
+    <div class="collapse" id="addTag">
+      <div class="well">
+        <?php $this->load->view('teamtag/add'); ?>
+      </div>
+    </div>
+    <br><br>
+    <?php $this->load->view('teamtag/list'); ?>
   </div>
-  <div class="tab-pane fade in active" id="tasks">
+  <div class="tab-pane fade in active" id="tasksToDo">
+    <br>
+    <h4>Tarefas</h4>
+  </div>
+  <div class="tab-pane fade" id="tasksDone">
     <br>
     <h4>Tarefas</h4>
   </div>
