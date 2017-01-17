@@ -6,10 +6,12 @@
     </div>
     <div class="col-lg-4">
       <label for="tag">Etiqueta</label>
-      <select name="tag" required class="form-control">
+      <select name="tag" id="tag" required class="form-control">
         <option> -- Selecione -- </option>
         <?php
-
+          foreach($tags as $tag){
+            echo '<option value="',$tag->id_tag,'">',$tag->name,'</option>';
+          }
         ?>
       </select>
     </div>
@@ -24,8 +26,8 @@
     </div>
   </div>
 
-  <label for="desc">Descrição</label>
-  <textarea name="desc" placeholder="Informe os detalhes" class="form-control" required></textarea>
+  <label for="description">Descrição</label>
+  <textarea name="description" id="description" placeholder="Informe os detalhes" class="form-control" required></textarea>
 
   <br><br>
 

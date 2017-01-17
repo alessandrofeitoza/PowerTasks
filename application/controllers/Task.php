@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or die("Sem Permissão");
+defined('BASEPATH') or die('Sem Permissão');
 
 class Task extends CI_Controller{
   public function index(){
@@ -7,21 +7,21 @@ class Task extends CI_Controller{
 
     $user = authorize(1);
 
-    //$tasks = $this->TaskModel->searchAll($user->email);
-    $tasks = false;
+    $tasksToDo = $this->TaskModel->searchAllByUserAndStatus($user->id_user, 0);
+    $tasksDone = $this->TaskModel->searchAllByUserAndStatus($user->id_user, 1);
 
     $tags = $this->TagModel->searchByUser($user->id_user);
 
     $page = array(
-      'page_content' => "task/list",
-      'user' => $user,
-      'tasks' => $tasks,
       'page_title' => 'Minhas Tarefas',
-      'tasks' => array(),
+      'page_content' => 'task/list',
+      'user' => $user,
+      'tasks' => $tasksToDo,
+      'tasksDone' => $tasksDone,
       'tags' => $tags,
     );
 
-    $this->load->view("public/base", $page);
+    $this->load->view('public/base', $page);
   }
 
   public function insert(){
@@ -30,14 +30,14 @@ class Task extends CI_Controller{
     $this->load->model('TaskModel');
 
     $task = new stdClass();
-    $task->title = html_escape($this->input->post('title'));
-    $task->desc = html_escape($this->input->post('desc'));
+    $task->user_id = $user->id_user;
+    $task->tag_id = $this->input->post('tag', true);
+    $task->title = $this->input->post('title', true);
+    $task->description = $this->input->post('description', true);
+    $task->priority = $this->input->post('priority', true);
     $task->created_in = date('d/m/Y H:i:s');
-    $task->completed_in = "";
-    $task->status = "";
-    $task->priority = html_escape($this->input->post('priority'));
 
-    $this->TaskModel->insert($task, $user->email);
+    $this->TaskModel->insert($task);
 
     $this->session->set_flashdata('success', 'Nova Tarefa Inserida');
 
@@ -47,122 +47,94 @@ class Task extends CI_Controller{
   public function edit($id){
     $user = authorize(1);
 
-    $this->load->model('TaskModel');
+    $task = $this->thisIsMyTask($id, $user->id_user);
 
-    $task = $this->TaskModel->searchById($user->email, $id);
-
-    if(!$task){
-      $this->session->set_flashdata('error', 'Tarefa não encontrada');
-      redirect("/tarefas");
-    }
+    $this->load->model('TagModel');
+    $tags = $this->TagModel->searchByUser($user->id_user);
 
     $page = array(
-      'page_content' => "task/edit",
+      'page_title' => 'Editar Tarefa',
+      'page_content' => 'task/edit',
       'user' => $user,
       'task' => $task,
-      'id' => $id,
+      'tags' => $tags,
     );
 
-    $this->load->view("public/base", $page);
+    $this->load->view('public/base', $page);
   }
 
   public function update($id){
     $user = authorize(1);
 
-    $this->load->model('TaskModel');
+    $task = $this->thisIsMyTask($id, $user->id_user);
 
-    $task = $this->TaskModel->searchById($user->email, $id);
+    $newTask = new stdClass();
+    $newTask->title = $this->input->post('title', true);
+    $newTask->description = $this->input->post('description', true);
+    $newTask->priority = $this->input->post('priority', true);
+    $newTask->tag_id = $this->input->post('tag', true);
 
-    if(!$task){
-      $this->session->set_flashdata('error', 'Tarefa não encontrada');
-      redirect("/tarefas");
-    }
-
-    $newData = new stdClass();
-    $newData->title = html_escape($this->input->post('title'));
-    $newData->desc = html_escape($this->input->post('desc'));
-    $newData->priority = html_escape($this->input->post('priority'));
-    $newData->status = $task->status;
-    $newData->created_in = $task->created_in;
-    $newData->completed_in = $task->completed_in;
-
-    $this->TaskModel->updateById($user->email, $id, $newData);
+    $this->TaskModel->updateById($newTask, $id);
 
     $this->session->set_flashdata('success', 'Tarefa Atualizada');
 
-    redirect('/tarefas');
+    redirect('tarefas');
   }
 
   public function delete($id){
     $user = authorize(1);
 
-    $this->load->model('TaskModel');
+    $task = $this->thisIsMyTask($id, $user->id_user);
 
-    $task = $this->TaskModel->searchById($user->email, $id);
-
-    if(!$task){
-      $this->session->set_flashdata('error', 'Tarefa não encontrada');
-      redirect("/tarefas");
-    }
-
-    $tasks = $this->TaskModel->deleteById($user->email, $id);
+    $this->TaskModel->deleteById($id);
 
     $this->session->set_flashdata('success', 'Tarefa Excluída');
 
-    redirect('/tarefas');
+    redirect('tarefas');
   }
 
   public function complete($id){
     $user = authorize(1);
 
-    $this->load->model('TaskModel');
+    $task = $this->thisIsMyTask($id, $user->id_user);
 
-    $task = $this->TaskModel->searchById($user->email, $id);
+    $newTask = new stdClass();
+    $newTask->status = 1;
+    $newTask->completed_in = datetime_current();
 
-    if(!$task){
-      $this->session->set_flashdata('error', 'Tarefa não encontrada');
-      redirect("/tarefas");
-    }
-
-    $newData = new stdClass();
-    $newData->title = $task->title;
-    $newData->desc = $task->desc;
-    $newData->status = "1";
-    $newData->created_in = $task->created_in;
-    $newData->completed_in = date('d/m/Y H:i:s');
-    $newData->priority = $task->priority;
-
-    $this->TaskModel->updateById($user->email, $id, $newData);
+    $this->TaskModel->updateById($newTask, $id);
 
     $this->session->set_flashdata('success', 'Tarefa Concluída');
 
-    redirect('/tarefas');
+    redirect('tarefas');
   }
 
   public function reopen($id){
     $user = authorize(1);
 
-    $this->load->model('TaskModel');
+    $task = $this->thisIsMyTask($id, $user->id_user);
 
-    $task = $this->TaskModel->searchById($user->email, $id);
+    $newTask = new stdClass();
+    $newTask->status = 0;
+    $newTask->completed_in = '';
 
-    if(!$task){
-      $this->session->set_flashdata('error', 'Tarefa não encontrada');
-      redirect("/tarefas");
-    }
-
-    $newData = new stdClass();
-    $newData->title = $task->title;
-    $newData->desc = $task->desc;
-    $newData->status = "";
-    $newData->created_in = $task->created_in;
-    $newData->completed_in = $task->completed_in;
-    $newData->priority = $task->priority;
-
-    $this->TaskModel->updateById($user->email, $id, $newData);
+    $this->TaskModel->updateById($newTask, $id);
 
     $this->session->set_flashdata('success', 'Tarefa Reaberta');
 
-    redirect('/tarefas');
+    redirect('tarefas');
+  }
+
+  public function thisIsMyTask($id_task, $user_id){
+    $this->load->model('TaskModel');
+
+    $task = $this->TaskModel->searchByIdAndUser($id_task, $user_id);
+
+    if(!$task){
+      $this->session->set_flashdata('error', 'Tarefa Inválida');
+      redirect('tarefas');
+    }
+
+    return $task;
   }
 }

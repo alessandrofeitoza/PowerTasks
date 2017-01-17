@@ -5,8 +5,11 @@
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     $('[data-placement="top"]').tooltip();
+    $('[data-toggle="popover"]').popover();
     //datatables
-    $('#table_tasks').DataTable();
+    $('#table_tasks').DataTable({
+      "order": [[ 0, "desc" ]]
+    });
 
     $('[data-target="#deleteTask"]').on("click", function(){
       $('#confirmDeleteTask').attr('href','excluir/'+$(this).val());
@@ -67,49 +70,82 @@
 
       <div class="tab-pane fade in active" id="todo">
         <br>
-        <h4>Para Fazer</h4>
 
         <?php
+          if(!$tasks):
+            echo '<div class="alert alert-info">';
+              echo '<strong>Parabéns! Você concluiu todas as suas tarefas</strong>';
+            echo '</div>';
+          else:
           echo '<table class="table table-hover table-striped " id="table_tasks">';
             echo '<thead>';
               echo '<tr>';
-                echo '<th>Titulo</th>';
-                echo '<th>Prioridade</th>';
                 echo '<th>Criou em</th>';
-                echo '<th>Completou em</th>';
-                echo '<th>Status</th>';
+                echo '<th>Titulo</th>';
+                echo '<th>Etiqueta</th>';
+                echo '<th>Prioridade</th>';
                 echo '<th>Opções</th>';
               echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
-              foreach($tasks as $id=>$eachTask){
+              foreach($tasks as $task){
                 echo '<tr>';
-                  echo '<td>',$eachTask->title,'</td>';
-                  echo '<td><span class="label label-',priority_task($eachTask->priority),'">',$eachTask->priority,'</span></td>';
-                  echo '<td>',$eachTask->created_in,'</td>';
-                  echo '<td>',$eachTask->completed_in,'</td>';
+                  echo '<td>',$task->created_in,'</td>';
+                  echo '<td><a data-container="body" data-content="',$task->description,'" data-placement="right" data-toggle="popover">',$task->title,'</a></td>';
+                  echo '<td><span class="label label-',$task->color,'">',$task->name,'</span></td>';
+                  echo '<td><span class="label label-',priority_task($task->priority),'">',$task->priority,'</span></td>';
                   echo '<td>';
-                    echo ($eachTask->status == "")?'<span class="label label-default">Aguardando<span>':'<span class="label label-success">Concluída<span>';
-                  echo '</td>';
-                  echo '<td>';
-                    echo '<button data-placement="top" title="Excluir" data-target="#deleteTask" value="',$id,'" data-toggle="modal" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button> ';
-                    echo '<a data-placement="top" title="Editar" href="',base_url('editar/'.$id),'" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a> ';
-
-
-                    echo ($eachTask->status == "")?'<button data-placement="top" title="Concluir" data-target="#completeTask" value="'.$id.'" data-toggle="modal" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-ok"></span></button>':'<button data-placement="top" title="Reabrir" data-target="#reopenTask" value="'.$id.'" data-toggle="modal" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove-circle"></span></button>';
-
+                    echo '<button data-placement="top" title="Excluir" data-target="#deleteTask" value="',$task->id_task,'" data-toggle="modal" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button> ';
+                    echo '<a data-placement="top" title="Editar" href="',base_url('editar/'.$task->id_task),'" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a> ';
+                    echo '<button data-placement="top" title="Concluir" data-target="#completeTask" value="'.$task->id_task.'" data-toggle="modal" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-ok"></span></button>';
                   echo '</td>';
                 echo '</tr>';
               }
             echo '</tbody>';
           echo '</table>';
+          endif;
         ?>
 
       </div>
 
       <div class="tab-pane fade" id="done">
         <br>
-        <h4>Feitas</h4>
+        <?php
+          if(!$tasksDone):
+            echo '<div class="alert alert-info">';
+              echo '<strong>Parabéns! Você concluiu todas as suas tarefas</strong>';
+            echo '</div>';
+          else:
+          echo '<table class="table table-hover table-striped " id="table_tasks">';
+            echo '<thead>';
+              echo '<tr>';
+                echo '<th>Criou em</th>';
+                echo '<th>Completou em</th>';
+                echo '<th>Titulo</th>';
+                echo '<th>Etiqueta</th>';
+                echo '<th>Prioridade</th>';
+                echo '<th>Opções</th>';
+              echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+              foreach($tasksDone as $task){
+                echo '<tr>';
+                  echo '<td>',$task->created_in,'</td>';
+                  echo '<td>',$task->completed_in,'</td>';
+                  echo '<td><a data-container="body" data-content="',$task->description,'" data-placement="right" data-toggle="popover">',$task->title,'</a></td>';
+                  echo '<td><span class="label label-',$task->color,'">',$task->name,'</span></td>';
+                  echo '<td><span class="label label-',priority_task($task->priority),'">',$task->priority,'</span></td>';
+                  echo '<td>';
+                    echo '<button data-placement="top" title="Excluir" data-target="#deleteTask" value="',$task->id_task,'" data-toggle="modal" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button> ';
+                    echo '<button data-placement="top" title="Reabrir" data-target="#reopenTask" value="'.$task->id_task.'" data-toggle="modal" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove-circle"></span></button>';
+                  echo '</td>';
+                echo '</tr>';
+              }
+            echo '</tbody>';
+          echo '</table>';
+          endif;
+        ?>
+
       </div>
     </div><!-- tabs -->
 
