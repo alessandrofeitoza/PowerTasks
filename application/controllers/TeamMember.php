@@ -7,7 +7,7 @@ class TeamMember extends Team{
   public function view($team_id){
     $user = authorize(1);
 
-    $this->load->model(array('TeamMemberModel', 'TeamTagModel'));
+    $this->load->model(array('TeamMemberModel', 'TeamTagModel', 'TeamTaskModel'));
     $team = parent::iManageThisTeam($team_id, $user->id_user);
 
     $availableMembers = $this->TeamMemberModel->searchAvailableMembersForThisTeam($team_id, $user->id_user);
@@ -16,12 +16,17 @@ class TeamMember extends Team{
 
     $tags = $this->TeamTagModel->searchAllByTeam($team_id);
 
+    $tasksToDo = $this->TeamTaskModel->searchAllByTeamAndStatus($team_id, 0);
+    $tasksDone = $this->TeamTaskModel->searchAllByTeamAndStatus($team_id, 1);
+
     $page = [
       'page_title' => 'Gerenciar Time',
       'page_content' => 'team/view',
       'user' => $user,
       'team' => $team,
       'tags' => $tags,
+      'tasksToDo' => $tasksToDo,
+      'tasksDone' => $tasksDone,
       'availableMembers' => $availableMembers,
       'members' => $members,
     ];

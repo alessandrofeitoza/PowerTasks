@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or die('Sem Permissão');
+defined('BASEPATH') or exit('Sem Permissão');
 
 class Task extends CI_Controller{
   public function index(){

@@ -7,7 +7,7 @@ class TaskModel extends CI_Model{
   public function insert(stdClass $newTask){
     $this->db->insert($this->table, $newTask);
 
-    return true;
+    return $this->db->insert_id();
   }
 
   public function searchAllByUserAndStatus($user_id, $status){

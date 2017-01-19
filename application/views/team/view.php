@@ -10,11 +10,15 @@
     // $('select').select2();
 
     $('[data-placement="top"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 
     var hash = window.location.hash;
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     $('#table_members').DataTable({
+      responsive: true
+    });
+    $('[id="table_tasks"]').DataTable({
       responsive: true
     });
 
@@ -34,6 +38,16 @@
     $('[data-target="#removeMember"]').on("click", function(){
       $('#confirmRemoveMember').attr('href','<?php echo base_url("time/membro/remover/$team->id_team/");?>'+$(this).val());
     });
+
+    $('[data-target="#deleteTask"]').on("click", function(){
+      $('#confirmDeleteTask').attr('href','<?php echo base_url("time/tarefa/excluir/$team->id_team/");?>'+$(this).val());
+    });
+    $('[data-target="#completeTask"]').on("click", function(){
+      $('#confirmCompleteTask').attr('href','<?php echo base_url("time/tarefa/concluir/$team->id_team/");?>'+$(this).val());
+    });
+    $('[data-target="#reopenTask"]').on("click", function(){
+      $('#confirmReopenTask').attr('href','<?php echo base_url("time/tarefa/reabrir/$team->id_team/");?>'+$(this).val());
+    });
   });
 </script>
 
@@ -43,7 +57,18 @@
   <strong>Criado em: </strong> <?php echo $team->created_in; ?>
 <!-- </div> -->
 
+<br><br><br>
+<a href="#addTask" class="btn btn-default" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+  <span class="fa fa-plus-circle"></span> Nova Tarefa
+</a>
 <br><br>
+<div class="collapse" id="addTask">
+  <div class="well">
+    <?php $this->load->view('teamtask/add'); ?>
+  </div>
+</div>
+
+<br>
 <ul class="nav nav-tabs">
   <li><a href="#tags" data-toggle="tab"><span class="fa fa-tags"></span> Etiquetas</a>
   </li>
@@ -76,10 +101,12 @@
   <div class="tab-pane fade in active" id="tasksToDo">
     <br>
     <h4>Tarefas</h4>
+    <?php $this->load->view('teamtask/listtodo'); ?>
   </div>
   <div class="tab-pane fade" id="tasksDone">
     <br>
     <h4>Tarefas</h4>
+    <?php $this->load->view('teamtask/listdone'); ?>
   </div>
   <div class="tab-pane fade" id="members">
     <br>
@@ -153,6 +180,88 @@
         <div class="row">
           <div class="col-lg-6">
             <a href="" id="confirmRemoveMember" class="btn btn-block btn-lg btn-danger">Sim</a>
+          </div>
+          <div class="col-lg-6">
+            <button type="button" class="btn btn-block btn-lg btn-default" data-dismiss="modal">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Excluir -->
+<div class="modal fade" id="deleteTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nova Tarefa</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+          <strong>Você deseja excluir esta tarefa?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="" id="confirmDeleteTask" class="btn btn-block btn-lg btn-primary">Sim</a>
+          </div>
+          <div class="col-lg-6">
+            <button type="button" class="btn btn-block btn-lg btn-default" data-dismiss="modal">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Concluir -->
+<div class="modal fade" id="completeTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Concluir Tarefa</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+          <strong>Você deseja concluir esta tarefa?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="" id="confirmCompleteTask" class="btn btn-block btn-lg btn-primary">Sim</a>
+          </div>
+          <div class="col-lg-6">
+            <button type="button" class="btn btn-block btn-lg btn-default" data-dismiss="modal">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Reabrir -->
+<div class="modal fade" id="reopenTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Reabrir Tarefa</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+          <strong>Você deseja reabrir esta tarefa?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="" id="confirmReopenTask" class="btn btn-block btn-lg btn-primary">Sim</a>
           </div>
           <div class="col-lg-6">
             <button type="button" class="btn btn-block btn-lg btn-default" data-dismiss="modal">Não</button>

@@ -113,7 +113,7 @@
         <?php
           if(!$tasksDone):
             echo '<div class="alert alert-info">';
-              echo '<strong>Parabéns! Você concluiu todas as suas tarefas</strong>';
+              echo '<strong>Você ainda não concluiu suas tarefas</strong>';
             echo '</div>';
           else:
           echo '<table class="table table-hover table-striped " id="table_tasks">';
