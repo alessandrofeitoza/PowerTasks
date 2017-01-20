@@ -13,7 +13,7 @@ class TeamTask extends CI_Controller{
 
     $newTask = new stdClass();
     $newTask->team_id = $team_id;
-    $newTask->teamtask_id = $this->input->post('tag', true);
+    $newTask->teamtag_id = $this->input->post('tag', true);
     $newTask->created_by = $user->id_user;
     $newTask->title = $this->input->post('title', true);
     $newTask->priority = $this->input->post('priority', true);

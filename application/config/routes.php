@@ -82,7 +82,6 @@ $route['time/tarefa/atualizar/(:num)/(:num)'] = 'teamTask/update/$1/$2';
 $route['time/tarefa/concluir/(:num)/(:num)'] = 'teamTask/complete/$1/$2';
 $route['time/tarefa/reabrir/(:num)/(:num)'] = 'teamTask/reopen/$1/$2';
 
-
 $route['etiqueta/inserir'] = 'tag/insert';
 $route['etiqueta/editar/(:num)'] = 'tag/edit/$1';
 $route['etiqueta/excluir/(:num)'] = 'tag/delete/$1';

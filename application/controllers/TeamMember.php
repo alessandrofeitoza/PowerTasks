@@ -13,6 +13,7 @@ class TeamMember extends Team{
     $availableMembers = $this->TeamMemberModel->searchAvailableMembersForThisTeam($team_id, $user->id_user);
 
     $members = $this->TeamMemberModel->searchAllMembersOfTeam($team_id);
+    $teamAdmin = $this->TeamModel->searchAdminTheOfTeam($team_id);
 
     $tags = $this->TeamTagModel->searchAllByTeam($team_id);
 
@@ -24,6 +25,7 @@ class TeamMember extends Team{
       'page_content' => 'team/view',
       'user' => $user,
       'team' => $team,
+      'admin' => $teamAdmin,
       'tags' => $tags,
       'tasksToDo' => $tasksToDo,
       'tasksDone' => $tasksDone,

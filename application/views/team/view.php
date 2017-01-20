@@ -145,6 +145,11 @@
         </thead>
         <tbody>
           <?php
+            echo '<tr>';
+            echo '<td><img width="30px" src="',base_url('assets/img/users/'.$admin->photo),'" class="img-circle">&nbsp;&nbsp;', $member->name,' <span class="badge">Admin</span></td>';
+            echo '<td>',$admin->created_in,'</td>';
+            echo '<td></td>';
+            echo '</tr>';
             foreach($members as $member){
               echo '<tr>';
               echo '<td><img width="30px" src="',base_url('assets/img/users/'.$member->photo),'" class="img-circle">&nbsp;&nbsp;', $member->name,'</td>';

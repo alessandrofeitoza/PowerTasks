@@ -49,4 +49,24 @@ class TeamMemberModel extends CI_Model{
 
     return $this->db->get()->result();
   }
+
+  public function searchMemberInTeam($id, $member_id){
+    $this->db->select('tb_team.*, tb_teammember.*');
+    $this->db->where('member_id', $member_id);
+    $this->db->where('id_team', $id);
+    $this->db->limit(1);
+    $this->db->join('tb_team', 'team_id = id_team');
+    $this->db->from($this->table);
+
+    return $this->db->get()->row();
+  }
+
+  public function searchTeamsIParticipateIn($member_id){
+    $this->db->select('tb_team.*, tb_teammember.*');
+    $this->db->where('member_id', $member_id);
+    $this->db->join('tb_team', 'team_id = id_team');
+    $this->db->from($this->table);
+
+    return $this->db->get()->result();
+  }
 }

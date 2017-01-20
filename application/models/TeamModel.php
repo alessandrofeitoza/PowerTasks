@@ -26,6 +26,16 @@ class TeamModel extends CI_Model{
     return $this->db->get()->row();
   }
 
+  public function searchAdminTheOfTeam($team_id){
+    $this->db->select('tb_team.*, tb_user.name, tb_user.photo, tb_user.id_user');
+    $this->db->where('id_team', $team_id);
+    $this->db->limit(1);
+    $this->db->join('tb_user', 'admin_id = id_user');
+    $this->db->from($this->table);
+
+    return $this->db->get()->row();
+  }
+
   public function searchById($id){
     $this->db->where('id_team', $id);
     $this->db->limit(1);

@@ -5,13 +5,29 @@ class Team extends CI_Controller{
   public function index(){
     $user = authorize(1);
 
-    $this->load->model('TeamModel');
+    $this->load->model(array('TeamModel', 'TeamMemberModel'));
 
     $page = [
       'page_title' => "Meus Times",
       'page_content' => 'team/list',
       'user' => $user,
       'teams' => $this->TeamModel->searchTeamsThatIManagement($user->id_user),
+      'other_teams' => $this->TeamMemberModel->searchTeamsIParticipateIn($user->id_user),
+    ];
+
+    $this->load->view('public/base', $page);
+  }
+
+  public function other(){
+    $user = authorize(1);
+
+    $this->load->model('TeamMemberModel');
+
+    $page = [
+      'page_title' => 'Times que Participo',
+      'page_content' => 'team/list_other',
+      'user' => $user,
+      'teams' => $this->TeamMemberModel->searchTeamsIParticipateIn($user->id_user),
     ];
 
     $this->load->view('public/base', $page);
@@ -127,8 +143,14 @@ class Team extends CI_Controller{
     $my_team = $ci->TeamModel->iManageThisTeam($id, $user_id);
 
     if(!$my_team){
-      $ci->session->set_flashdata('error', 'Escolha um time válido');
-      redirect('/');
+
+      $ci->load->model('TeamMemberModel');
+      $my_team = $ci->TeamMemberModel->searchMemberInTeam($id, $user_id);
+
+      if(!$my_team){
+        $ci->session->set_flashdata('error', 'Escolha um time válido');
+        redirect('/');
+      }
     }
 
     return $my_team;
