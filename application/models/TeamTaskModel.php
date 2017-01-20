@@ -54,5 +54,14 @@ class TeamTaskModel extends CI_Model{
     return $this->db->get()->result();
   }
 
+  public function searchAllByUserAndStatus($user_id, $status){
+    $this->db->select('tb_user.name AS user_name, id_teamtask, color, tb_teamtag.name, tb_teamtask.description, tb_teamtask.created_in, priority, title, completed_in');
+    $this->db->where('tb_teamtask.team_id', $user_id);
+    $this->db->where('status', $status);
+    $this->db->join('tb_teamtag', 'teamtag_id = id_teamtag');
+    $this->db->join('tb_user', 'tb_teamtask.created_by = id_user');
+    $this->db->from($this->table);
 
+    return $this->db->get()->result();
+  }
 }

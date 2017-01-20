@@ -9,10 +9,23 @@ class User extends CI_Controller{
 
     $user = $this->session->userdata('user-powertasks');
 
+    $this->load->model(array('TeamModel', 'TeamMemberModel', 'TaskModel', 'TagModel', 'TeamTaskModel'));
+
+    $myTasksToDo = $this->TaskModel->searchAllByUserAndStatus($user->id_user, 0);
+    $myTasksDone = $this->TaskModel->searchAllByUserAndStatus($user->id_user, 1);
+    $myTags = $this->TagModel->searchByUser($user->id_user);
+    // $tasksTeamToDo = $this->TeamTaskModel->searchAllByUserAndStatus($user->id_user, 0);
+    $myTeams = array_merge($this->TeamModel->searchTeamsThatIManagement($user->id_user), $this->TeamMemberModel->searchAllTeamsOfMember($user->id_user));
+
     $page = [
       'page_title' => 'Dashboard',
       'page_content' => 'user/dashboard',
       'user'=>$user,
+      'myTasksToDo' => $myTasksToDo,
+      'myTasksDone' => $myTasksDone,
+      'myTags' => $myTags,
+      // 'tasksTeamToDo' => count($tasksTeamToDo),
+      'myTeams' => $myTeams,
     ];
 
     $this->load->view('public/base', $page);
