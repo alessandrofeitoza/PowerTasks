@@ -21,7 +21,7 @@ class TeamMember extends Team{
     $tasksDone = $this->TeamTaskModel->searchAllByTeamAndStatus($team_id, 1);
 
     $page = [
-      'page_title' => 'Gerenciar Time',
+      'page_title' => $team->name,
       'page_content' => 'team/view',
       'user' => $user,
       'team' => $team,

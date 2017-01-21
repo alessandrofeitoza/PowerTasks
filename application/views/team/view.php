@@ -52,12 +52,14 @@
 </script>
 
 <!-- <div class="alert alert-info"> -->
-  <strong>Nome do Time: </strong> <?php echo $team->name; ?><br>
-  <strong>Descrição: </strong> <?php echo $team->description; ?><br>
-  <strong>Criado em: </strong> <?php echo $team->created_in; ?>
+<blockquote>
+  <p><?php echo $team->description; ?></p>
+  <footer>Criado por  <cite title="<?php echo $admin->name; ?>"><?php echo $admin->name; ?></cite></footer>
+  <footer>Em <cite title="<?php echo $team->created_in; ?>"><?php echo $team->created_in; ?></cite></footer>
+</blockquote>
 <!-- </div> -->
 
-<br><br><br>
+<br><br>
 <a href="#addTask" class="btn btn-default" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
   <span class="fa fa-plus-circle"></span> Nova Tarefa
 </a>
