@@ -6,9 +6,9 @@ Aplicação Simples para gerenciar tarefas, onde cada usuário poderá se cadast
 
 Para criar diferentes projetos de tarefas você pode criar um time sem outros membros, dessa forma você teria um time só pra você.
 
->>> Está sendo utilizado o MySQL/MariaDB como Banco de Dados;
->>> O CodeIgniter está na versão 3.1.3
->>> Está sendo utilizado o SB-Admin, Dashboard Bootstrap
+- Está sendo utilizado o MySQL/MariaDB como Banco de Dados;
+- O CodeIgniter está na versão 3.1.3;
+- Está sendo utilizado o SB-Admin, Dashboard Bootstrap
 
 
 **************************
