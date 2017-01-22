@@ -16,10 +16,15 @@ Instalação
 **************************
 -  `Ter no minimo o PHP 5.6;`
 
+-  `Criar um .htaccess na raiz do sistema com o código abaixo:`
+```
+RewriteEngine on
+RewriteCond $1 !^(index\.php|assets|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]
+```
+
 -  `Após obter a aplicação abra o arquivo {application/config/config.php} e altere a linha 26 de acordo com o endereço web da aplicação onde você instalar;`
 
 -  `Crie um banco de dados e importe o arquivo {database/database.sql}, lembre-se de remover esse arquivo para que o mesmo não fique disponível.`
 
 -  `Altere o seu arquivo {application/config/database.php} de acordo com a configuração de seu banco de dados.`
-
-
