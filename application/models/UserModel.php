@@ -46,4 +46,12 @@ class UserModel extends CI_Model{
     return true;
   }
 
+  public function searchByRecovery($recovery){
+    $this->db->where('recovery', $recovery);
+    $this->db->limit(1);
+    $this->db->from($this->table);
+
+    return $this->db->get()->row();
+  }
+
 }

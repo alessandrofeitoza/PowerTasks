@@ -101,7 +101,7 @@ class User extends CI_Controller{
     $newEmail = filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL);
     if($newEmail != $user->email && $this->UserModel->searchByEmail($newEmail)){
       $this->session->set_flashdata('error', 'Já existe conta com este email');
-      redirect('/perfil');
+      redirect('perfil');
     }
 
     $user->name = html_escape($this->input->post('name'));
@@ -115,7 +115,7 @@ class User extends CI_Controller{
 
       if(!$filename){
         $this->session->set_flashdata('error', 'Por favor tente outra imagem');
-        redirect('/perfil');
+        redirect('perfil');
       }
 
       $user->photo = $filename;
@@ -125,14 +125,102 @@ class User extends CI_Controller{
     $this->UserModel->updateById($user, $user->id_user);
 
     $this->session->set_flashdata('success', 'Perfil Atualizado');
-    redirect('/perfil');
+    redirect('perfil');
   }
 
   public function logout(){
     $this->session->unset_userdata('user-powertasks');
 
     $this->session->set_flashdata('success', "Você saiu");
-    redirect('/');
+    redirect('entrar');
   }
+
+  public function recoverypass(){
+    $email = $this->input->post('email', true);
+
+    if(!$email){
+      redirect('entrar');
+    }
+
+    $this->load->model('UserModel');
+
+    $user = $this->UserModel->searchByEmail($email);
+
+    if(!$user){
+      $this->session->set_flashdata('error', 'Email não encontrado!');
+      redirect('entrar');
+    }
+
+    $key = sha1(uniqid( mt_rand(), true));
+
+    $newRecovery = new stdClass();
+    $newRecovery->recovery = $key;
+    $this->UserModel->updateById($newRecovery, $user->id_user);
+
+    //Inicia o processo de configuração para o envio do email
+    $config['protocol'] = 'mail'; // define o protocolo utilizado
+    $config['wordwrap'] = TRUE; // define se haverá quebra de palavra no texto
+    $config['validate'] = TRUE; // define se haverá validação dos endereços de email
+    $config['mailtype'] = 'html';
+    $this->email->from('seuemail@email.com', 'FEITOZA technology'); // Remetente
+    $this->email->to($email, $user->name); // Destinatário
+    $this->email->subject('[PowerTasks] - Recuperação de Senha');
+    // Define o assunto do email
+    $message = "Olá $user->name, você acaba de solicitar a recuperação de senha!";
+    $message .= "<br><br> Entre no link abaixo e informe sua nova senha.";
+    $message .= '<br><br><a href="'.base_url('recuperarsenha/'.$key).'">'.base_url('recuperarsenha/'.$key).'</a>';
+    $this->email->message($message);
+
+    if($this->email->send()){
+      $this->session->set_flashdata('success','Um email foi enviado pra você!');
+    } else {
+      $this->session->set_flashdata('error',$this->email->print_debugger());
+    }
+
+    redirect('entrar');
+   }
+
+   public function updatepass($key){
+     if(!$key){
+       redirect('entrar');
+     }
+
+     $this->load->model('UserModel');
+
+     $user = $this->UserModel->searchByRecovery($key);
+
+     if(!$user){
+       $this->session->set_flashdata('error', 'Link Inválido');
+       redirect('entrar');
+     }
+
+     $this->load->view('public/recovery', array('key'=>$key));
+   }
+
+   public function confirmupdatepass(){
+     if(!$this->input->post('key')){
+       redirect('entrar');
+     }
+
+     $this->load->model('UserModel');
+
+     $user = $this->UserModel->searchByRecovery($this->input->post('key'));
+
+     if(!$user){
+       redirect('entrar');
+     }
+
+     $newPassword = password_hash(html_escape($this->input->post('password', true)), PASSWORD_BCRYPT);
+
+     $newData = new stdClass();
+     $newData->recovery = "";
+     $newData->password = $newPassword;
+
+     $this->UserModel->updateById($newData, $user->id_user);
+
+     $this->session->set_flashdata('success', 'Senha Atualizada');
+
+     redirect('entrar');
+   }
 
 }

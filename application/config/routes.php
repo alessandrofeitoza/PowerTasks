@@ -56,6 +56,9 @@ $route['perfil'] = 'user/profile';
 $route['autenticar'] = 'user/authenticate';
 $route['usuario/inserir'] = 'user/insert';
 $route['usuario/atualizar'] = 'user/updateaccount';
+$route['recuperarsenha'] = 'user/recoverypass';
+$route['recuperarsenha/(:any)'] = 'user/updatepass/$1';
+$route['confirmarsenha'] = 'user/confirmupdatepass';
 
 $route['times'] = 'team';
 $route['time'] = 'team';

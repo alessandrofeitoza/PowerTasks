@@ -2,8 +2,8 @@
 <html lang="pt-br">
   <head>
     <title>Gerenciador de Tarefas Simples</title>
-    <meta name="description" content="Pequena aplicação para gerenciar tarefas estilo todoist feito com PHP e JSON">
-    <meta name="keywords" content="PHP, JSON, CodeIgniter, Tarefas, Todoist">
+    <meta name="description" content="Pequena aplicação para gerenciar tarefas estilo todoist feito com PHP(codeigniter)">
+    <meta name="keywords" content="PHP, CodeIgniter, Tarefas, Todoist">
     <meta name="author" content="Alessandro Feitoza">
     <meta charset="utf-8">
 
@@ -41,7 +41,9 @@
                 <div class="bar"></div>
               </div>
               <div class="button-container">
-                <button><span>Entrar</span></button>
+                <button><span>Entrar</span></button><br>
+                <br>
+                <a href="#recoveryPass" data-target="#recoveryPass" data-toggle="modal">Esqueci minha senha!</a>
               </div>
             </form>
           </div>
@@ -56,6 +58,34 @@
           </div>
         </div>
       </div>
+
+
+      <!-- Modal -->
+<div class="modal fade" id="recoveryPass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Recuperar Senha</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+          <strong>Você receberá um email com instruções para recuperar sua senha!</strong>
+        </div>
+
+        <form action="<?php echo base_url('recuperarsenha'); ?>" method="post" class="text-center">
+          <input type="email" placeholder="Digite seu email" name="email" required class="input-lg form-control">
+          <br>
+          <button class="btn btn-primary btn-lg">ENVIAR</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
       </div>
       <script src="<?php echo base_url('assets/materialloginform/events.js'); ?>"></script>
       <footer class="footer text-right">

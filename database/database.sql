@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 22, 2017 at 02:43 PM
+-- Generation Time: Jan 23, 2017 at 01:45 PM
 -- Server version: 5.5.53-0+deb8u1
 -- PHP Version: 7.0.14-1~dotdeb+8.1
 
@@ -127,6 +127,7 @@ CREATE TABLE `tb_user` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `recovery` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `first_access` varchar(30) NOT NULL,
   `last_access` varchar(30) NOT NULL
@@ -178,3 +179,45 @@ ALTER TABLE `tb_teamtask`
 ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`id_user`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tb_tag`
+--
+ALTER TABLE `tb_tag`
+  MODIFY `id_tag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_task`
+--
+ALTER TABLE `tb_task`
+  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_team`
+--
+ALTER TABLE `tb_team`
+  MODIFY `id_team` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_teammember`
+--
+ALTER TABLE `tb_teammember`
+  MODIFY `id_team_members` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_teamtag`
+--
+ALTER TABLE `tb_teamtag`
+  MODIFY `id_teamtag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_teamtask`
+--
+ALTER TABLE `tb_teamtask`
+  MODIFY `id_teamtask` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT for table `tb_user`
+--
+ALTER TABLE `tb_user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
